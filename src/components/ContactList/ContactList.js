@@ -1,16 +1,18 @@
 import React from "react";
+import { nanoid } from "nanoid";
+import ContactListItem from "./ContactListItem";
 
 
-const ContactList = ({ contacts }) => (
-    <div className="contact-form">
+const ContactList = ({ contacts }) => {
+   return ( <div>
                 
         <h1 className="title">Contacts</h1>
         <ul className="contact-list">
-            
+            {contacts.map(contact => (<ContactListItem name={contact} id={nanoid()}></ContactListItem>))}
         </ul>
-        <button className="contact-button" type="button">Delete contact</button>
           
     </div>
-);
+   )
+};
 
 export default ContactList;

@@ -4,23 +4,22 @@ import ContactList from "./ContactList/ContactList";
 
 class App extends Component{
 
-  state = {
-  contacts: [],
-  name: ''
-  }
+state = {
+   contacts: [],
+   name: ''
+   }
     
-    handleInputChange =(event) =>{ 
-        this.setState({
-            name: event.currentTarget.value,
-        })
-    }
+    formSubmitHandler = data => {
+        this.state.contacts.push(data.name);
+    };
+    
 
     render() {
         return (
-            <div className="phonebook">
-            <ContactForm title="Name" name={this.state.name} onChangeInput={this.handleInputChange}></ContactForm>
-            <ContactList></ContactList>
-                </div>
+<>
+            <ContactForm onSubmit={this.formSubmitHandler}></ContactForm>
+            <ContactList contacts={this.state.contacts}></ContactList>
+            </>    
     )
     }
 }
