@@ -1,14 +1,13 @@
 import React from "react";
-import { nanoid } from "nanoid";
-import ContactListItem from "./ContactListItem";
 
-
-const ContactList = ({ contacts }) => {
+const ContactList = ({ contacts}) => {
    return ( <div>
                 
         <h1 className="title">Contacts</h1>
         <ul className="contact-list">
-            {contacts.map(contact => (<ContactListItem name={contact} id={nanoid()}></ContactListItem>))}
+           {contacts.map(contact => (
+              <li key={contact.id}>{contact.name} : {contact.number}</li>
+            ))}
         </ul>
           
     </div>
