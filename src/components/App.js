@@ -14,20 +14,27 @@ state = {
       { id: "id-4", name: "Annie Copeland",number: "227-91-26"},
     ],
     filter:'',
-    name: '', 
-   number:'',
 }
     
-    addContact = data => {
-        const contact = {
-            id: nanoid(),
-            name: data.name,
-            number:data.number,
+    addContact = data => {   
+        const addingUniqueName = this.state.contacts
+            .map(cont => cont.name)
+            .includes(data.name);
+        
+        if (addingUniqueName) {
+            alert(`${data.name} is already in your phone book`);
         }
-
-        this.setState(({contacts}) => ({
-            contacts: [contact,...contacts],
-        }));
+        else {
+            const contact = {
+            id: nanoid(),
+             name: data.name,
+            number:data.number,
+            }
+            
+             this.setState(({contacts}) => ({
+             contacts: [contact,...contacts],
+         }));
+        }
     };
 
     changeFilter = e => {
@@ -41,6 +48,14 @@ state = {
 const normalizedFilter = filter.toLowerCase();
  return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
     }
+
+    deleteContact =(contactID) =>{
+    this.setState((prevState) => {
+      return {
+        contacts: prevState.contacts.filter(({ id }) => id !== contactID),
+      };
+    });
+    }
     
 
     render() {
@@ -48,10 +63,13 @@ const normalizedFilter = filter.toLowerCase();
         
         const filteredContacts = this.getFilteredContacts();
         return (
-<>
+            <>
+                <h1>Phonebook</h1>
                 <ContactForm onSubmit={this.addContact}></ContactForm>
+                <h2>Contacts</h2>
                 <Filter value={filter} onChange={this.changeFilter}></Filter>
-            <ContactList contacts={filteredContacts}></ContactList>
+                <ContactList contacts={filteredContacts} onDeleteBtn ={this.deleteContact}></ContactList>
+            
             </>    
     )
     }
